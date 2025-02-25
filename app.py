@@ -50,7 +50,7 @@ class User(db.Model):
     is_verified = db.Column(db.Boolean, default=False, nullable=False)
     verification_pending = db.Column(db.Boolean, default=False, nullable=False)
     balance = db.Column(db.Float, default=0.0, nullable=False)
-    role = db.Column(db.String(50), nullable=False, default='Admin')
+    role = db.Column(db.String(50), nullable=False, default='User regular')
     receipt_url = db.Column(db.String(500), nullable=True)
     payment_method = db.Column(db.String(20), nullable=True)
     payment_number = db.Column(db.String(50), nullable=True)
@@ -377,7 +377,7 @@ def register():
         doc_number=doc_number,
         password=hashed_password,
         gender=gender,
-        role='Admin',
+        role='User regular',
         payment_method=payment_method,
         payment_number=payment_number
     )
