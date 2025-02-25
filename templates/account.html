@@ -398,7 +398,7 @@
     <nav class="navbar navbar-expand navbar-dark navbar-custom">
         <div class="container-fluid">
             <span class="navbar-text">
-                KrediApp
+                CrediApp
             </span>
             <ul class="navbar-nav d-flex align-items-center ml-auto">
                 <!-- Icono de Home -->
@@ -567,10 +567,11 @@
         </div>
     </div>
 </div>
+
 <!-- Formulario para cargar documentos de identidad (inicialmente oculto) -->
 <div id="fileUploadSection" class="mt-4" style="display:none;">
     <h4 class="text-center text-primary font-weight-bold">Sube tus imágenes de la cédula</h4>
-    <form id="uploadForm" enctype="multipart/form-data">
+    <form action="{{ url_for('upload_documents') }}" method="POST" enctype="multipart/form-data">
         <!-- Frente de la cédula -->
         <div class="form-group">
             <label for="frontImage" class="font-weight-bold">Frente de la cédula:</label>
@@ -613,25 +614,12 @@
             </div>
         </div>
 
-        <!-- Barra de progreso -->
-        <div id="progress-bar-container" style="width: 100%; background: #e0e0e0; height: 20px; display:none;">
-            <div id="progress-bar" style="width: 0%; background: green; height: 100%;"></div>
-        </div>
-
         <!-- Botón para subir los documentos -->
         <div class="d-flex justify-content-center mt-4">
             <button type="submit" class="btn btn-success btn-lg w-75">Subir Documentos</button>
         </div>
     </form>
 </div>
-
-<!-- Scripts de Bootstrap y dependencias -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<!-- Librería para manejar la firma -->
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <!-- Scripts de Bootstrap y dependencias -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -686,7 +674,6 @@
         document.getElementById('fileUploadSection').style.display = 'block';
         document.getElementById('startVerificationBtn').style.display = 'none';
     });
-
     // Función para mostrar la previsualización de la imagen cargada
     document.getElementById("frontImage").addEventListener("change", function() {
         var file = this.files[0];
@@ -718,46 +705,6 @@
         reader.readAsDataURL(file);
     });
 
-    // Cargar los archivos usando AJAX y mostrar barra de progreso
-    document.getElementById("uploadForm").addEventListener("submit", function(event) {
-        event.preventDefault();  // Evitar el envío del formulario tradicional
-
-        // Crear FormData para enviar los archivos
-        var formData = new FormData();
-        formData.append("frontImage", document.getElementById("frontImage").files[0]);
-        formData.append("backImage", document.getElementById("backImage").files[0]);
-        formData.append("signatureImage", document.getElementById("signatureImage").files[0]);
-
-        // Configurar la solicitud AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "{{ url_for('upload_documents') }}", true);
-
-        // Mostrar la barra de progreso cuando comience la carga
-        document.getElementById("progress-bar-container").style.display = "block";
-        
-        // Actualizar la barra de progreso
-        xhr.upload.addEventListener("progress", function(event) {
-            if (event.lengthComputable) {
-                var percent = (event.loaded / event.total) * 100;
-                document.getElementById("progress-bar").style.width = percent + "%";
-            }
-        });
-
-        // Manejar la respuesta del servidor
-        xhr.onload = function() {
-            if (xhr.status == 200) {
-                alert("Documentos subidos exitosamente");
-            } else {
-                alert("Error al subir los documentos");
-            }
-            // Ocultar la barra de progreso
-            document.getElementById("progress-bar-container").style.display = "none";
-        };
-
-        // Enviar los datos al servidor
-        xhr.send(formData);
-    });
-
     window.addEventListener('DOMContentLoaded', (event) => {
         const verificationState = document.getElementById('verificationState').innerHTML.trim();
 
@@ -782,8 +729,9 @@
             document.getElementById('startVerificationBtn').style.display = 'none';
         });
     });
-</script>
 
+
+</script>
 
 </body>
 </html>
