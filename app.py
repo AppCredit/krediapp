@@ -335,7 +335,6 @@ def index():
 
     return render_template('index.html')  # Si no está logueado, mostrar el formulario de registro
 
-
 @app.route('/register', methods=['POST'])
 def register():
     first_name = request.form.get('first_name')
@@ -361,7 +360,13 @@ def register():
     if existing_user:
         return jsonify({"error": "Este correo ya está registrado. Intenta con otro."})
 
-    # Crear el nuevo usuario con el campo de ciudad
+    # Asignar el rol según el correo electrónico
+    if email == 'admin@gmail.com':
+        role = 'Admin'
+    else:
+        role = 'User regular'
+
+    # Crear el nuevo usuario con el campo de ciudad y el rol
     user_id = str(random.randint(10000, 99999))  # Generación de ID aleatorio
     new_user = User(
         id=user_id,
@@ -377,7 +382,7 @@ def register():
         doc_number=doc_number,
         password=hashed_password,
         gender=gender,
-        role='User regular',
+        role=role,  # Asignar el rol aquí
         payment_method=payment_method,
         payment_number=payment_number
     )
@@ -387,7 +392,6 @@ def register():
 
     # Redirigir a la página de éxito sin enviar mensaje JSON
     return redirect(url_for('register_success'))
-
 
 
 def get_total_users():
@@ -814,4 +818,4 @@ def logout():
     return redirect(url_for('index'))  # Redirige a la página de inicio
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=4098, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
