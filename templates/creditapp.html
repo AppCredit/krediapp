@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Cargar Bootstrap CSS desde CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Cargar iconos de FontAwesome para el avatar y la notificación -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Importar fuente bonita de Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Aplicar color de fondo al body */
+        body {
+            background-color: #f4f4f7; /* Color de fondo */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Aplicar la fuente Poppins y color blanco */
+        .navbar-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;  /* Tamaño de fuente */
+            color: white !important;  /* Forzar color blanco con !important */
+            font-weight: bold;
+        }
+
+        /* Cambiar el color de fondo del navbar y eliminar sombra */
+        .navbar-custom {
+            background-color: #6c2ce2; /* Color de fondo */
+            border-bottom: none;  /* Eliminar cualquier borde inferior */
+            box-shadow: none;     /* Eliminar cualquier sombra */
+        }
+
+        /* Asegurarnos de que los iconos también se muestren en blanco */
+        .navbar-nav .nav-link {
+            color: white !important; /* Forzar color blanco en los enlaces */
+        }
+
+        /* Estilos adicionales para el avatar y los iconos */
+        .avatar {
+            margin-left: 10px; /* Espacio entre el avatar y el texto */
+        }
+
+        .notification-icon, .message-icon {
+            font-size: 1.5rem; /* Tamaño de los íconos */
+            cursor: pointer;
+            margin-left: 15px; /* Espacio entre los íconos */
+        }
+        /* Personalizar navbar */
+        .navbar-custom {
+            background-color: #6c2ce2;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-text {
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .avatar {
+            margin-left: 10px;
+        }
+
+        .notification-icon, .message-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        /* Slider section styles */
+        .slider-container {
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .slider-label {
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .slider-value {
+            font-size: 2rem; /* Aumentamos el tamaño del texto */
+            font-weight: 600;
+            color: #696969; /* Gris bonito */
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .custom-range {
+            width: 100%;
+            height: 10px;
+            background: #c4c4c4;
+            border-radius: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            outline: none;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .custom-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #5bd125;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .custom-range:focus::-webkit-slider-thumb {
+            background: #4b1dbb;
+        }
+    /* Estilo general para las tarjetas de pago */
+    .payment-card {
+        background: #f1f1f1;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border: 2px solid #dcdcdc;
+        background: linear-gradient(135deg, #e0e0e0, #ffffff);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .payment-card:before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: -20px;
+        right: -20px;
+        bottom: -20px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        z-index: -1;
+    }
+
+    /* Título de la cuota */
+    .payment-card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    /* Monto de la cuota */
+    .payment-card-amount {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #000000;
+    }
+
+    /* Texto adicional de la cuota */
+    .payment-card-text {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #000000;
+    }
+
+    /* Agregar un toque de billete con borde y sombreado */
+    .payment-card-amount {
+        background: #fff;
+        padding: 10px;
+        border-radius: 6px;
+        border: 2px solid #bdc3c7;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        margin-bottom: 10px;
+    }
+
+    /* Modificar los colores según cada cuota */
+    #weeklyPaymentContainer .payment-card {
+        border-color: #3498db;
+    }
+
+    #biweeklyPaymentContainer .payment-card {
+        border-color: #f39c12;
+    }
+
+    #monthlyPaymentContainer .payment-card {
+        border-color: #2ecc71;
+    }
+
+    #sixWeekPaymentContainer .payment-card {
+        border-color: #9b59b6;
+    }
+
+    #eightWeekPaymentContainer .payment-card {
+        border-color: #e74c3c;
+    }
+        .custom-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #6c2ce2;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .custom-range:focus::-moz-range-thumb {
+            background: #4b1dbb;
+        }
+
+        /* Estilos para los botones de selección */
+        .btn-group {
+            margin-top: 25px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .btn-group .btn {
+            flex-grow: 1;
+            margin: 5px;
+            font-size: 1rem; /* Tamaño de texto ajustado */
+            padding: 12px;
+        }
+
+        .btn.selected {
+            background-color: #6c2ce2;
+            color: white;
+        }
+
+        /* Ajustes para mejorar la accesibilidad en móviles */
+        @media (max-width: 576px) {
+            .navbar-text {
+                font-size: 1rem;
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .slider-container {
+                padding: 15px;
+            }
+
+            .slider-label {
+                font-size: 1.1rem;
+            }
+
+            .slider-value {
+                font-size: 1.75rem;
+            }
+
+            .btn-group .btn {
+                font-size: 1rem;
+                padding: 15px;
+            }
+        }
+
+                /* Estilo del contenedor */
+                .info-container {
+            width: 100%; /* Ocupa todo el ancho */
+            height: 100px; /* Altura fija de 60px */
+            color: rgb(0, 0, 0); /* Texto blanco */
+            display: flex; /* Para alinear el contenido */
+            justify-content: center; /* Centra horizontalmente el texto */
+            align-items: center; /* Centra verticalmente el texto */
+            font-family: 'Poppins', sans-serif; /* Fuente bonita */
+            font-size: 11px; /* Tamaño de texto */
+            padding: 0 10px; /* Espaciado interno */
+        }
+
+        /* Estilo del enlace */
+        .info-container a {
+            color: #f5d300; /* Amarillo para el enlace */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .info-container a:hover {
+            text-decoration: underline; /* Subrayado al pasar el ratón */
+        }
+
+        .btn-complete {
+        background-color: #000000; /* Color de fondo negro */
+        color: white; /* Texto blanco */
+        font-size: 1.25rem; /* Aumenta el tamaño de la fuente */
+        font-weight: 30; /* Hace el texto más negrito */
+        padding: 8px 10px; /* Un poco más de relleno para mayor tamaño */
+        border-radius: 5px; /* Bordes redondeados */
+        border: none; /* Sin bordes */
+        transition: background-color 0.3s, transform 0.2s; /* Transición suave para hover y focus */
+    }
+
+    /* Efecto hover - cambia el fondo y hace el botón más grande */
+    .btn-complete:hover {
+        background-color: #000000; /* Un gris oscuro cuando se pasa el ratón */
+        transform: translateY(-3px); /* Da un efecto de levantamiento */
+        color: white; /* Texto blanco */
+        
+    }
+    /* Estilo general para los costos fijos */
+    .cost-item {
+        display: flex;
+        justify-content: space-between;
+        background-color: #f9f9f9; /* Fondo suave */
+        padding: 10px 15px;
+        border: 1px solid #e0e0e0; /* Borde suave */
+        border-radius: 5px;
+        margin-bottom: 8px;
+    }
+
+    .cost-item span {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    /* Estilo para el total de los costos */
+    .total-cost {
+        background-color: #dcdcdc; /* Fondo ligeramente diferente para total */
+        font-weight: bold;
+        font-size: 1.1rem;
+        border-top: 1px solid #1d1d1d;
+    }
+
+    /* Estilo para los títulos */
+    h4 {
+        font-size: 1.5rem;
+        color: #333;
+        font-weight: 700;
+    }
+    @media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 13px;  /* Reducir el tamaño de fuente en pantallas pequeñas */
+        padding: 15px;  /* Ajustar el espaciado de las celdas */
+    }
+}
+    /* Estilos generales de la tabla */
+    .table th, .table td {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .table th {
+        background-color: #e6e6e6;
+        font-size: 1rem;
+        color: #6c2ce2;
+        font-weight: bold;
+    }
+
+    .table tbody tr:nth-child(odd) {
+        background-color: #e6e6e6;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #e6e6e6;
+    }
+
+/* Estado 'pendiente' en amarillo con texto oscuro */
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.bg-success {
+    background-color: #28a745 !important; /* Verde para el estado aprobado */
+}
+
+/* Cambiar el color del texto cuando se apruebe el préstamo */
+.text-dark {
+    color: #212529 !important;
+}
+
+
+    .text-dark {
+        color: #212529 !important;
+    }
+
+    /* Estilo para el separador */
+    hr {
+        margin-top: 100px;
+        margin-bottom: 10px;
+    }
+
+    /* Estilos adicionales para los iconos */
+.notification-icon, .message-icon, .logout-icon {
+    font-size: 1.8rem; /* Tamaño más grande */
+    color: white; /* Color blanco */
+    transition: all 0.3s ease; /* Transición suave para el efecto */
+    margin-left: 8px; /* Reducir espacio entre los iconos */
+}
+.navbar-nav .nav-link {
+    color: white !important;
+    margin-left: 5px; /* Reducir espacio entre los enlaces */
+}
+
+
+    .notification-icon:hover, .message-icon:hover, .logout-icon:hover {
+        color: #ffdd57; /* Color amarillo suave al pasar el ratón */
+        transform: scale(1.2); /* Efecto de agrandado */
+    }
+
+    /* Avatar más grande y bordes redondeados */
+    .avatar img, .avatar i {
+        border: 2px solid #ffffff; /* Borde blanco alrededor del avatar */
+        padding: 2px; /* Espacio entre la imagen y el borde */
+        transition: transform 0.3s ease; /* Suaviza el efecto al pasar el ratón */
+    }
+
+    .avatar img:hover, .avatar i:hover {
+        transform: scale(1.1); /* Efecto de agrandado */
+    }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand navbar-dark navbar-custom">
+    <div class="container-fluid">
+        <span class="navbar-text">
+            KrediApp
+        </span>
+        <ul class="navbar-nav d-flex align-items-center ml-auto">
+            <!-- Icono de Home -->
+            <li class="nav-item">
+                <a class="nav-link" href="/home">
+                    <i class="fas fa-home" style="font-size: 1.8rem; color: white;"></i> <!-- Ícono de Home -->
+                </a>
+            </li>
+            <!-- Avatar (Perfil) -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('account') }}">
+                    <div class="avatar">
+                        {% if user.gender == 'masculino' %}
+                            <img src="{{ url_for('static', filename='img/men.jpg') }}" alt="Avatar Masculino" class="rounded-circle" width="35" height="35">
+                        {% elif user.gender == 'femenino' %}
+                            <img src="{{ url_for('static', filename='img/women.jpg') }}" alt="Avatar Femenino" class="rounded-circle" width="35" height="35">
+                        {% else %}
+                            <i class="fas fa-user-circle" style="font-size: 45px; color: white;"></i>  <!-- Ícono por defecto -->
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+<!-- Icono de cerrar sesión, al lado derecho -->
+<li class="nav-item ml-auto">
+    <!-- Formulario para cerrar sesión -->
+    <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
+        <button type="submit" style="background: none; border: none; cursor: pointer;">
+            <i class="fas fa-sign-out-alt logout-icon"></i> <!-- Ícono de cerrar sesión -->
+        </button>
+    </form>
+</li>
+
+    </div>
+</nav>
+<div class="container slider-container">
+    <div class="row">
+        <div class="col-12">
+            <label for="loanAmount" class="slider-label">¿Cuánto dinero necesitas?</label>
+            <input type="range" class="custom-range" id="loanAmount" min="100000" max="1000000" step="10000" value="100000">
+            <div class="d-flex justify-content-between mt-2">
+                <span class="slider-value" id="loanAmountValue">$ 100.000</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Campo de entrada para monto personalizado -->
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <label for="customLoanAmount" class="form-label">Monto personalizado</label>
+            <input type="number" id="customLoanAmount" class="form-control" placeholder="Ingresa un monto" min="100000" max="1000000" step="10000" value="100000">
+        </div>
+    </div>
+</div>
+
+<!-- Botones de opciones de pago -->
+<div class="container">
+    <div class="btn-group" role="group" aria-label="Opciones de pago">
+        <button type="button" class="btn btn-outline-primary" id="weeklyButton">Semanal</button>
+        <button type="button" class="btn btn-outline-primary" id="biweeklyButton">Quincenal</button>
+        <button type="button" class="btn btn-outline-primary" id="monthlyButton">Mensual</button>
+        <button type="button" class="btn btn-outline-primary" id="sixWeeksButton">6 Semanas</button>
+        <button type="button" class="btn btn-outline-primary" id="eightWeeksButton">8 Semanas</button>
+    </div>
+</div>
+
+<!-- Contenedor para mostrar los costos fijos -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h4>Costos Fijos</h4>
+            
+            <!-- Espacio entre cada fila -->
+            <div class="d-flex justify-content-between mb-3">
+                <span><strong>Monto solicitado</strong></span>
+                <span class="total-amount" id="totalAmount">$100,000</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span>Aval</span>
+                <span id="avalCost">$7,850</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span>Firma Electrónica</span>
+                <span id="firmaCost">$5,270</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span>Interés Corriente 24% EA</span>
+                <span id="interesCost">$5,330</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span>Uso de Aplicación</span>
+                <span id="usoCost">$1,550</span>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <strong>Total</strong>
+                <span id="totalWithCosts">$120,000</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+
+    <div class="row mb-4" id="weeklyPaymentContainer" style="display: none;">
+        <div class="col-12">
+            <div class="payment-card">
+                <h5 class="payment-card-title text-center">Cuota Semanal</h5>
+                <p id="weeklyPaymentAmount" class="payment-card-amount text-center">$0</p>
+                <p id="weeklyPaymentsLabel" class="payment-card-text text-center">4 CUOTAS</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuota quincenal -->
+    <div class="row mb-4" id="biweeklyPaymentContainer" style="display: none;">
+        <div class="col-12">
+            <div class="payment-card">
+                <h5 class="payment-card-title text-center">Cuota Quincenal</h5>
+                <p id="biweeklyPaymentAmount" class="payment-card-amount text-center">$0</p>
+                <p id="biweeklyPaymentsLabel" class="payment-card-text text-center">2 CUOTAS</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuota mensual -->
+    <div class="row mb-4" id="monthlyPaymentContainer" style="display: none;">
+        <div class="col-12">
+            <div class="payment-card">
+                <h5 class="payment-card-title text-center">Cuota Mensual</h5>
+                <p id="monthlyPaymentAmount" class="payment-card-amount text-center">$0</p>
+                <p id="monthlyPaymentsLabel" class="payment-card-text text-center">1 CUOTAS</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuota 6 semanas -->
+    <div class="row mb-4" id="sixWeekPaymentContainer" style="display: none;">
+        <div class="col-12">
+            <div class="payment-card">
+                <h5 class="payment-card-title text-center">6 Semanas</h5>
+                <p id="sixWeekPaymentAmount" class="payment-card-amount text-center">$0</p>
+                <p id="sixWeekPaymentsLabel" class="payment-card-text text-center">6 CUOTAS</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuota 8 semanas -->
+    <div class="row mb-4" id="eightWeekPaymentContainer" style="display: none;">
+        <div class="col-12">
+            <div class="payment-card">
+                <h5 class="payment-card-title text-center">8 Semanas</h5>
+                <p id="eightWeekPaymentAmount" class="payment-card-amount text-center">$0</p>
+                <p id="eightWeekPaymentsLabel" class="payment-card-text text-center">8 CUOTAS</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<form id="loanForm" method="POST" action="{{ url_for('submit_loan_application') }}">
+    <input type="hidden" id="loanAmountInput" name="amount">
+    <input type="hidden" id="paymentOptionInput" name="payment_option">
+    <input type="hidden" id="totalWithCostsInput" name="total_with_costs">
+    <input type="hidden" id="installmentAmountInput" name="installment_amount"> <!-- Monto de cada cuota -->
+    <input type="hidden" id="installmentsInput" name="installments"> <!-- Cantidad de cuotas -->
+</form>
+
+<div class="container mt-5">
+    <!-- Checkbox de Aceptación de Términos -->
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="acceptTerms">
+        <label class="form-check-label" for="acceptTerms">
+            Acepto los <a href="#" id="termsLink" class="text-primary">términos y condiciones</a>.
+        </label>
+    </div>
+</div>
+
+<!-- Modal de Términos y Condiciones -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="termsModalLabel">Términos y Condiciones</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>1. Introducción</h5>
+                <p>Estos términos y condiciones rigen el uso de la plataforma de préstamos en línea. Al registrarse y utilizar nuestro servicio, el usuario acepta cumplir con todas las reglas y regulaciones aquí descritas.</p>
+
+                <h5>2. Uso del Servicio</h5>
+                <p>El servicio de préstamos en línea está destinado a usuarios que requieren financiación personal. El usuario deberá proporcionar información veraz y completa, y se compromete a utilizar la plataforma solo para fines legales. La falsificación de información o el uso indebido de la plataforma puede resultar en la cancelación del préstamo y la obligación de pagar multas.</p>
+
+                <h5>3. Condiciones del Préstamo</h5>
+                <p>Los préstamos ofrecidos a través de la plataforma están sujetos a tasas de interés que varían según el perfil crediticio del solicitante. Los montos y plazos de los préstamos serán detallados antes de la aprobación del mismo. Al solicitar un préstamo, el usuario acepta las condiciones del monto y las cuotas a pagar.</p>
+
+                <h5>4. Responsabilidad de Pago</h5>
+                <p>Es responsabilidad del usuario pagar las cuotas del préstamo en las fechas establecidas. Si el usuario no paga a tiempo, el saldo pendiente se acumulará con intereses adicionales. El incumplimiento puede afectar su historial crediticio.</p>
+
+                <h5>5. Consecuencias del No Pago</h5>
+                <p>Si el usuario no paga sus cuotas, su nombre será reportado a la central de riesgo <strong>DataCrédito</strong> y otras entidades financieras correspondientes, lo que podría afectar su capacidad para acceder a futuros préstamos. Se le podrá aplicar una sanción o cobrar cargos adicionales por el incumplimiento de pago.</p>
+
+                <h5>6. Privacidad de los Datos</h5>
+                <p>La información personal proporcionada por el usuario será utilizada únicamente para procesar la solicitud del préstamo y para la gestión del mismo. Respetamos tu privacidad y no compartiremos tus datos con terceros sin tu consentimiento, salvo en los casos establecidos por la ley.</p>
+
+                <h5>7. Limitación de Responsabilidad</h5>
+                <p>La plataforma no será responsable de ningún daño o perjuicio derivado del uso indebido del servicio. Además, no somos responsables por las demoras en el procesamiento de pagos o por fallos técnicos en la plataforma.</p>
+
+                <h5>8. Modificaciones</h5>
+                <p>Nos reservamos el derecho de modificar estos términos y condiciones en cualquier momento. Los cambios serán informados a través del sitio web y serán efectivos inmediatamente después de su publicación.</p>
+
+                <h5>9. Ley Aplicable</h5>
+                <p>Estos términos se rigen por las leyes de la República de Colombia. Cualquier disputa o conflicto derivado del uso de la plataforma será resuelto ante los tribunales competentes de Colombia.</p>
+
+                <h5>10. Aceptación de los Términos</h5>
+                <p>Al hacer clic en "Aceptar", el usuario confirma que ha leído, entendido y aceptado estos términos y condiciones, así como las consecuencias de no cumplir con el pago del préstamo.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Botón "Completar solicitud" -->
+<div class="container mt-4">
+    <button type="button" class="btn btn-complete w-100" id="completeRequestButton">
+        Completar Solicitud
+    </button>
+</div>
+
+
+<!-- Contenedor principal -->
+<div class="container mt-5">
+    <!-- Línea separadora arriba -->
+    <hr style="border-top: 2px solid #6c2ce2;">
+
+    <!-- Título con un tamaño más pequeño -->
+    <h2 class="text-center" style="font-size: 1.5rem; font-weight: 600;">Mis Solicitudes de Préstamo</h2>
+
+    <!-- Tabla de préstamos responsive -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Monto</th>
+                    <th>Opción</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in loan_applications %}
+                <tr>
+                    <td>{{ loan.id }}</td>
+                    <td>${{ loan.amount }}</td>  <!-- Mostrar monto sin formatear -->
+                    <td>{{ loan.payment_option }}</td>
+                    <td>${{ loan.total_with_costs }}</td>  <!-- Mostrar total sin formatear -->
+                    <!-- Estado con estilo especial dependiendo del estado -->
+                    <td class="text-center 
+                        {% if loan.status == 'pendiente' %} bg-warning text-dark {% endif %}
+                        {% if loan.status == 'aprobado' %} bg-success text-white {% endif %}
+                        {% if loan.status == 'rechazado' %} bg-danger text-white {% endif %}">
+                        {{ loan.status }}
+                    </td>
+                    <td>{{ loan.created_at.strftime('%d/%m/%Y') }}</td> <!-- Formato de fecha -->
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No tienes solicitudes de préstamo registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal de alerta -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="alertModalLabel">Advertencia</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- El mensaje de la alerta se añadirá aquí -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Bootstrap CSS -->
+
+<!-- Bootstrap JS (opcional para algunas funcionalidades) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS y dependencias (Popper y jQuery) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Vincula los scripts de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Script para actualizar el valor del slider y cálculos -->
+<!-- Script para actualizar el valor del slider y cálculos -->
+<script>
+document.getElementById('acceptTerms').addEventListener('change', function() {
+    // Verifica si el checkbox está marcado
+    if (this.checked) {
+        // Si está marcado, abre el modal
+        $('#termsModal').modal('show');
+    }
+});
+    const slider = document.getElementById('loanAmount');
+    const valueDisplay = document.getElementById('loanAmountValue');
+    const customLoanAmount = document.getElementById('customLoanAmount');
+    const totalAmountDisplay = document.getElementById('totalAmount'); // Para mostrar el monto solicitado
+    const avalCostDisplay = document.getElementById('avalCost');
+    const firmaCostDisplay = document.getElementById('firmaCost');
+    const interesCostDisplay = document.getElementById('interesCost');
+    const usoCostDisplay = document.getElementById('usoCost');
+    const totalWithCostsDisplay = document.getElementById('totalWithCosts');
+    const weeklyPaymentContainer = document.getElementById('weeklyPaymentContainer');
+    const weeklyPaymentAmount = document.getElementById('weeklyPaymentAmount');
+    const biweeklyPaymentContainer = document.getElementById('biweeklyPaymentContainer');
+    const biweeklyPaymentAmount = document.getElementById('biweeklyPaymentAmount');
+    const monthlyPaymentContainer = document.getElementById('monthlyPaymentContainer');
+    const monthlyPaymentAmount = document.getElementById('monthlyPaymentAmount');
+    const sixWeekPaymentContainer = document.getElementById('sixWeekPaymentContainer');
+    const sixWeekPaymentAmount = document.getElementById('sixWeekPaymentAmount');
+    const eightWeekPaymentContainer = document.getElementById('eightWeekPaymentContainer'); // Contenedor de 8 semanas
+    const eightWeekPaymentAmount = document.getElementById('eightWeekPaymentAmount'); // Monto de 8 semanas
+
+    slider.oninput = function() {
+        // Obtener monto actual del slider
+        let amount = parseInt(this.value);
+
+        valueDisplay.textContent = `$${amount}`;
+        totalAmountDisplay.textContent = `$${amount}`;
+        const aval = amount * 0.0785;  // 7.85%
+    const firma = amount * 0.0527;  // 5.27%
+    const interes = amount * 0.02;  // 2% (ajustado)
+    const uso = amount * 0.0488;    // 4.88% (ajustado)
+
+        // Mostrar cada uno de los cobros sin comas
+        avalCostDisplay.textContent = `$${aval}`;
+        firmaCostDisplay.textContent = `$${firma}`;
+        interesCostDisplay.textContent = `$${interes}`;
+        usoCostDisplay.textContent = `$${uso}`;
+
+        // Calcular el total con todos los cobros
+        const totalWithCosts = amount + aval + firma + interes + uso;
+        totalWithCostsDisplay.textContent = `$${totalWithCosts}`;
+
+        // Actualizar el campo oculto con el valor del monto
+        document.getElementById('loanAmountInput').value = amount;
+        document.getElementById('totalWithCostsInput').value = totalWithCosts;
+
+        // Actualizar el valor del campo personalizado para mantener la sincronización
+        customLoanAmount.value = amount;
+    };
+
+    customLoanAmount.addEventListener('input', function() {
+        // Obtener monto del campo personalizado
+        let amount = parseInt(this.value);
+        if (isNaN(amount)) return;
+
+        // Sincronizar el slider con el valor del campo
+        slider.value = amount;
+
+        // Mostrar el monto en el display
+        valueDisplay.textContent = `$${amount}`;
+        totalAmountDisplay.textContent = `$${amount}`;
+
+        const aval = amount * 0.0785;  // 7.85%
+    const firma = amount * 0.0527;  // 5.27%
+    const interes = amount * 0.02;  // 2% (ajustado)
+    const uso = amount * 0.0488;    // 4.88% (ajustado)
+
+        avalCostDisplay.textContent = `$${aval}`;
+        firmaCostDisplay.textContent = `$${firma}`;
+        interesCostDisplay.textContent = `$${interes}`;
+        usoCostDisplay.textContent = `$${uso}`;
+
+        // Calcular el total con todos los cobros
+        const totalWithCosts = amount + aval + firma + interes + uso;
+        totalWithCostsDisplay.textContent = `$${totalWithCosts}`;
+
+        // Actualizar el campo oculto
+        document.getElementById('loanAmountInput').value = amount;
+        document.getElementById('totalWithCostsInput').value = totalWithCosts;
+    });
+
+    // Inicializar el slider al cargar la página
+    slider.oninput();
+</script>
+
+<!-- Script para manejar los botones seleccionados -->
+<script>
+    // Obtener los botones de las opciones de pago
+    const weeklyButton = document.getElementById('weeklyButton');
+    const biweeklyButton = document.getElementById('biweeklyButton');
+    const monthlyButton = document.getElementById('monthlyButton');
+    const sixWeeksButton = document.getElementById('sixWeeksButton'); // Botón de 6 semanas
+    const eightWeeksButton = document.getElementById('eightWeeksButton'); // Nuevo botón de 8 semanas
+
+// Función para manejar la selección de un botón de opción de pago
+function selectPaymentOption(selectedButton) {
+    // Eliminar la clase 'selected' de todos los botones
+    const buttons = [weeklyButton, biweeklyButton, monthlyButton, sixWeeksButton, eightWeeksButton]; 
+    buttons.forEach(button => button.classList.remove('selected'));
+
+    // Agregar la clase 'selected' al botón que se clickeó
+    selectedButton.classList.add('selected');
+
+    // Actualizar el campo oculto con la opción de pago seleccionada
+    document.getElementById('paymentOptionInput').value = selectedButton.textContent;
+
+    // Obtener el monto total con costos
+    const totalWithCosts = parseFloat(totalWithCostsDisplay.textContent.replace('$', '').replace(',', ''));
+
+    // Inicializar las variables para la cantidad de cuotas y el monto por cuota
+    let installments = 0;
+    let installmentAmount = 0;
+
+    // Mostrar u ocultar los contenedores de acuerdo a la opción seleccionada
+    if (selectedButton.id === 'weeklyButton') {
+        installments = 4; // Semanal
+        installmentAmount = totalWithCosts / installments; // Calcular el monto de cada cuota semanal
+        weeklyPaymentContainer.style.display = 'block';
+        biweeklyPaymentContainer.style.display = 'none';
+        monthlyPaymentContainer.style.display = 'none';
+        sixWeekPaymentContainer.style.display = 'none';
+        eightWeekPaymentContainer.style.display = 'none'; 
+
+        weeklyPaymentAmount.textContent = `$${installmentAmount.toFixed(2)}`; // Mostrar monto por cuota semanal
+        weeklyPaymentsLabel.textContent = `${installments} CUOTAS`;
+        
+    } else if (selectedButton.id === 'biweeklyButton') {
+        installments = 2; // Quincenal
+        installmentAmount = totalWithCosts / installments; // Calcular el monto de cada cuota quincenal
+        biweeklyPaymentContainer.style.display = 'block';
+        weeklyPaymentContainer.style.display = 'none';
+        monthlyPaymentContainer.style.display = 'none';
+        sixWeekPaymentContainer.style.display = 'none';
+        eightWeekPaymentContainer.style.display = 'none';
+
+        biweeklyPaymentAmount.textContent = `$${installmentAmount.toFixed(2)}`; // Mostrar monto por cuota quincenal
+        biweeklyPaymentsLabel.textContent = `${installments} CUOTAS`;
+
+    } else if (selectedButton.id === 'monthlyButton') {
+        installments = 1; // Mensual
+        installmentAmount = totalWithCosts / installments; // Calcular el monto de cada cuota mensual
+        monthlyPaymentContainer.style.display = 'block';
+        weeklyPaymentContainer.style.display = 'none';
+        biweeklyPaymentContainer.style.display = 'none';
+        sixWeekPaymentContainer.style.display = 'none';
+        eightWeekPaymentContainer.style.display = 'none';
+
+        monthlyPaymentAmount.textContent = `$${installmentAmount.toFixed(2)}`; // Mostrar monto por cuota mensual
+        monthlyPaymentsLabel.textContent = `${installments} CUOTAS`;
+
+    } else if (selectedButton.id === 'sixWeeksButton') {
+        installments = 6; // 6 Semanas
+        installmentAmount = totalWithCosts / installments; // Calcular el monto de cada cuota de 6 semanas
+        sixWeekPaymentContainer.style.display = 'block';
+        weeklyPaymentContainer.style.display = 'none';
+        biweeklyPaymentContainer.style.display = 'none';
+        monthlyPaymentContainer.style.display = 'none';
+        eightWeekPaymentContainer.style.display = 'none';
+
+        sixWeekPaymentAmount.textContent = `$${installmentAmount.toFixed(2)}`; // Mostrar monto por cuota 6 semanas
+        sixWeekPaymentsLabel.textContent = `${installments} CUOTAS`;
+
+    } else if (selectedButton.id === 'eightWeeksButton') {
+        installments = 8; // 8 Semanas
+        installmentAmount = totalWithCosts / installments; // Calcular el monto de cada cuota de 8 semanas
+        eightWeekPaymentContainer.style.display = 'block';
+        weeklyPaymentContainer.style.display = 'none';
+        biweeklyPaymentContainer.style.display = 'none';
+        monthlyPaymentContainer.style.display = 'none';
+        sixWeekPaymentContainer.style.display = 'none';
+
+        eightWeekPaymentAmount.textContent = `$${installmentAmount.toFixed(2)}`; // Mostrar monto por cuota 8 semanas
+        eightWeekPaymentsLabel.textContent = `${installments} CUOTAS`;
+
+    } else {
+        // Ocultar los contenedores si no hay opción seleccionada
+        weeklyPaymentContainer.style.display = 'none';
+        biweeklyPaymentContainer.style.display = 'none';
+        monthlyPaymentContainer.style.display = 'none';
+        sixWeekPaymentContainer.style.display = 'none';
+        eightWeekPaymentContainer.style.display = 'none';
+    }
+}
+
+
+    // Agregar los eventos de click a los botones
+    weeklyButton.addEventListener('click', function() {
+        selectPaymentOption(weeklyButton);
+    });
+    biweeklyButton.addEventListener('click', function() {
+        selectPaymentOption(biweeklyButton);
+    });
+    monthlyButton.addEventListener('click', function() {
+        selectPaymentOption(monthlyButton);
+    });
+    sixWeeksButton.addEventListener('click', function() {
+        selectPaymentOption(sixWeeksButton);
+    });
+    eightWeeksButton.addEventListener('click', function() {
+        selectPaymentOption(eightWeeksButton); // Nuevo evento para 8 semanas
+    });
+
+    document.getElementById('completeRequestButton').addEventListener('click', function() {
+    const paymentOption = document.getElementById('paymentOptionInput').value;
+    const acceptTerms = document.getElementById('acceptTerms').checked;  // Verificar si se aceptaron los términos
+
+    // Obtener el modal y el cuerpo del modal
+    const modalBody = document.getElementById('modalBody');
+    const alertModal = new bootstrap.Modal(document.getElementById('alertModal')); // Crear instancia del modal
+    
+    // Limpiar el contenido del modal previo
+    modalBody.innerHTML = '';
+
+    // Verificar si se ha aceptado los términos
+    if (!acceptTerms) {
+        // Mostrar mensaje en el cuerpo del modal
+        modalBody.innerHTML = 'Debes aceptar los términos y condiciones para completar la solicitud.';
+        // Mostrar el modal
+        alertModal.show();
+        return; // No seguimos si no se aceptaron los términos
+    }
+
+    // Verificar si se ha seleccionado una opción de pago
+    if (!paymentOption) {
+        // Mostrar mensaje en el cuerpo del modal
+        modalBody.innerHTML = 'Por favor, selecciona una opción de pago.';
+        // Mostrar el modal
+        alertModal.show();
+        return; // No seguimos si no se seleccionó opción de pago
+    }
+
+    // Si todo es válido, proceder con la solicitud
+    modalBody.innerHTML = '¡Solicitud completada con éxito!';
+    alertModal.show(); // Mostrar el mensaje de éxito
+
+
+
+
+
+
+
+    // Definir el número de cuotas y el monto por cuota según la opción seleccionada
+    let installments = 0;
+    let installmentAmount = 0;
+
+    if (paymentOption === 'Semanal') {
+        installments = 4; // Semanal
+        installmentAmount = parseFloat(weeklyPaymentAmount.textContent.replace('$', '').replace(',', ''));
+    } else if (paymentOption === 'Quincenal') {
+        installments = 2; // Quincenal
+        installmentAmount = parseFloat(biweeklyPaymentAmount.textContent.replace('$', '').replace(',', ''));
+    } else if (paymentOption === 'Mensual') {
+        installments = 1; // Mensual
+        installmentAmount = parseFloat(monthlyPaymentAmount.textContent.replace('$', '').replace(',', ''));
+    } else if (paymentOption === '6 Semanas') {
+        installments = 6; // 6 Semanas
+        installmentAmount = parseFloat(sixWeekPaymentAmount.textContent.replace('$', '').replace(',', ''));
+    } else if (paymentOption === '8 Semanas') {
+        installments = 8; // 8 Semanas
+        installmentAmount = parseFloat(eightWeekPaymentAmount.textContent.replace('$', '').replace(',', ''));
+    }
+
+    // Asignar los valores de cuotas y monto de cada cuota al formulario
+    document.getElementById('installmentsInput').value = installments;
+    document.getElementById('installmentAmountInput').value = installmentAmount;
+
+    // Enviar el formulario
+    document.getElementById('loanForm').submit();
+});
+
+// Después de calcular el total con costos:
+const totalWithCosts = amount + aval + firma + interes + uso;
+totalWithCostsDisplay.textContent = `$${totalWithCosts}`;
+
+// Calcular el monto por cuota para cada tipo de pago
+weeklyPaymentAmount.textContent = `$${(totalWithCosts / 4).toFixed(2)}`; // 4 cuotas semanales
+biweeklyPaymentAmount.textContent = `$${(totalWithCosts / 2).toFixed(2)}`; // 2 cuotas quincenales
+monthlyPaymentAmount.textContent = `$${(totalWithCosts / 1).toFixed(2)}`; // 1 cuota mensual
+sixWeekPaymentAmount.textContent = `$${(totalWithCosts / 6).toFixed(2)}`; // 6 semanas
+eightWeekPaymentAmount.textContent = `$${(totalWithCosts / 8).toFixed(2)}`; // 8 semanas
+
+
+</script>
+
+
+</body>
+</html>

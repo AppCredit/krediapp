@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Exitoso</title>
+    <!-- Agregar Font Awesome para los íconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilo global */
+        body {
+            background-color: #e0e5ec;  /* Fondo suave */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Contenedor principal */
+        .container {
+            border-radius: 12px;
+            padding: 40px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        /* Animación de entrada */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Título */
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        /* Icono de verificación */
+        .check-icon {
+            font-size: 4em;
+            color: #2ecc71;  /* Color verde para éxito */
+            margin-bottom: 20px;
+        }
+
+        /* Texto de descripción */
+        p {
+            font-size: 1.1em;
+            color: #34495e;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Estilo para el botón */
+        .btn-start {
+            display: inline-flex; /* Usamos flex para alinear el icono y el texto horizontalmente */
+            align-items: center; /* Centra verticalmente el icono y el texto */
+            padding: 12px 24px; /* Aumentamos el padding para hacer los botones un poco más grandes */
+            font-size: 16px; /* Font-size un poco más grande */
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            background-color: #000000; /* Verde */
+            color: white;
+        }
+
+        /* Hover del botón */
+        .btn-start:hover {
+            background-color: #000000;
+            box-shadow: 0px 6px 12px rgba(40, 167, 69, 0.6);
+        }
+
+        /* Efecto de clic */
+        .btn-start:active {
+            transform: scale(0.95);
+        }
+
+        /* Estilo para dispositivos móviles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                width: 95%;
+            }
+            h1 {
+                font-size: 2.2em;
+            }
+            p {
+                font-size: 1em;
+            }
+            .btn-start {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Ícono de check en la parte superior -->
+        <i class="fas fa-check-circle check-icon"></i>
+        <h1>¡Registro Exitoso!</h1>
+        <p>Te has registrado con éxito. Ahora puedes solicitar un Credito. Para ello, inicia sesión en tu cuenta.</p>
+        <!-- Botón de iniciar sesión con el nuevo estilo -->
+        <a href="{{ url_for('index') }}" class="btn-start">Iniciar sesión</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Préstamo Exitosa</title>
+    <!-- Cargar Bootstrap CSS desde CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Cargar iconos de FontAwesome para el avatar y la notificación -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Importar fuente bonita de Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f7;
+        }
+        .navbar-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            color: white !important;
+        }
+        .navbar-custom {
+            background-color: #6c2ce2;
+            border-bottom: none;
+            box-shadow: none;
+        }
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+        .avatar {
+            margin-left: 10px;
+        }
+
+        
+        .navbar-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .navbar-custom {
+            background-color: #6c2ce2;
+            border-bottom: none;
+            box-shadow: none;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .avatar {
+            margin-left: 10px;
+        }
+        .notification-icon, .message-icon, .logout-icon {
+            font-size: 1.8rem;
+            color: white;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            margin-left: 5px;
+        }
+
+        .notification-icon:hover, .message-icon:hover, .logout-icon:hover {
+            color: #ffdd57;
+            transform: scale(1.2);
+        }
+
+        .avatar img, .avatar i {
+            border: 2px solid #ffffff;
+            padding: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar img:hover, .avatar i:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand navbar-dark navbar-custom">
+    <div class="container-fluid">
+        <span class="navbar-text">
+            CrediApp
+        </span>
+        <ul class="navbar-nav d-flex align-items-center ml-auto">
+            <!-- Icono de Home -->
+            <li class="nav-item">
+                <a class="nav-link" href="/home">
+                    <i class="fas fa-home" style="font-size: 1.8rem; color: white;"></i> <!-- Ícono de Home -->
+                </a>
+            </li>
+            <!-- Avatar (Perfil) -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('account') }}">
+                    <div class="avatar">
+                        {% if user.gender == 'masculino' %}
+                            <img src="{{ url_for('static', filename='img/men.jpg') }}" alt="Avatar Masculino" class="rounded-circle" width="35" height="35">
+                        {% elif user.gender == 'femenino' %}
+                            <img src="{{ url_for('static', filename='img/women.jpg') }}" alt="Avatar Femenino" class="rounded-circle" width="35" height="35">
+                        {% else %}
+                            <i class="fas fa-user-circle" style="font-size: 45px; color: white;"></i>  <!-- Ícono por defecto -->
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+<!-- Icono de cerrar sesión, al lado derecho -->
+<li class="nav-item ml-auto">
+    <!-- Formulario para cerrar sesión -->
+    <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
+        <button type="submit" style="background: none; border: none; cursor: pointer;">
+            <i class="fas fa-sign-out-alt logout-icon"></i> <!-- Ícono de cerrar sesión -->
+        </button>
+    </form>
+</li>
+
+    </div>
+</nav>
+
+    <!-- Contenido principal -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">¡Solicitud de Préstamo Procesada!</h4>
+                    <p>Tu solicitud ha sido procesada. Estamos verificando los datos y te daremos una respuesta muy pronto.</p>
+                    <hr>
+                    <p><strong>Monto Solicitado:</strong> ${{ loan.amount }}</p>
+                    <p><strong>Opción de Pago:</strong> {{ loan.payment_option }}</p>
+                    <p><strong>Total: uso de APP, y otros:</strong> ${{ loan.total_with_costs }}</p>
+                    <p><strong>Cantidad de Cuotas:</strong> {{ loan.installments }}</p>
+                    <p><strong>Monto por Cuota:</strong> ${{ "{:,.0f}".format(loan.installment_amount) }}</p>
+                    <hr>
+                    <p class="mb-0">Gracias por confiar en nosotros. Si tienes alguna pregunta, no dudes en contactarnos.</p>
+                </div>
+                <div class="text-center">
+                    <a href="{{ url_for('creditapp') }}" class="btn btn-primary">Continuar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

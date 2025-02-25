@@ -1,0 +1,413 @@
+/* Estilo para el fondo con neumorfismo */
+.bg-custom {
+    background: #e0e5ec;  /* Fondo suave, similar al del botón */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;  /* Alineación superior */
+    align-items: center;
+    padding-top: 20px; /* Espacio en la parte superior para evitar que el contenido quede pegado al borde */
+}
+
+/* Estilo para el título */
+h1.display-4 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    color: rgb(44, 44, 44);
+    font-weight: bold;
+}
+
+/* Estilo para el texto de "Solicita un préstamo" */
+.lead {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem; /* Fuente más pequeña */
+    font-weight: 400;
+    color: #424242; /* Gris */
+    font-weight: bold;
+}
+
+
+/* Estilo para el texto y la imagen en dispositivos móviles */
+@media (max-width: 576px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .lead {
+        font-size: 0.90rem;
+    }
+
+    .img-fluid {
+        max-width: 80%;
+    }
+}
+#newSection {
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+#newSection.show {
+    display: block;
+    opacity: 1;
+}
+
+/* Título más pequeño y de color negro */
+.title-money {
+    font-size: 1.5rem; /* Título más pequeño */
+    color: #000; /* Color negro */
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Monto inicial más grande y con fuente bonita */
+#initialAmount {
+    font-size: 3rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilos personalizados para la barra */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: #e0e0e0; /* Fondo gris de la barra */
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+/* Estilo para el "thumb" (el control deslizante) */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #28a745;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #28a745;
+    cursor: pointer;
+}
+
+/* Barra con color verde que cambia dinámicamente */
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #28a745 0%, #28a745 0%, #e0e0e0 0%, #e0e0e0 100%);
+}
+
+input[type="range"]::-moz-range-track {
+    height: 8px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #28a745 0%, #28a745 0%, #e0e0e0 0%, #e0e0e0 100%);
+}
+/* Estilo para los botones */
+.btn-start {
+    display: inline-flex; /* Usamos flex para alinear el icono y el texto horizontalmente */
+    align-items: center; /* Centra verticalmente el icono y el texto */
+    padding: 12px 24px; /* Aumentamos el padding para hacer los botones un poco más grandes */
+    font-size: 16px; /* Font-size un poco más grande */
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    bottom: 20px; /* Ajustado para no estar tan pegado al borde */
+    right: 20px; /* Ajustado para no estar tan pegado al borde */
+    margin-top: 80px; /* Asegura que los botones estén debajo de la imagen */
+
+}
+
+/* Alineación de los botones en pantallas móviles */
+@media (max-width: 768px) {
+    .btn-start {
+        padding: 10px 20px; /* Ajustamos el padding para un tamaño más adecuado en móviles */
+        font-size: 14px; /* Aumentamos un poco el font-size para que sea más legible */
+        margin-bottom: 12px; /* Agregamos más espacio entre los botones */
+    }
+
+    /* Aseguramos que los botones se alineen uno al lado del otro */
+    .btn-start + .btn-start {
+        margin-left: 12px; /* Espacio entre los botones */
+    }
+}
+
+/* Estilo para "Registrarse" */
+#btnRegister {
+    background-color: #000000; /* Verde */
+    box-shadow: 0px 4px 10px rgba(40, 167, 69, 0.4);
+    color: white;
+
+}
+
+#btnRegister:hover {
+    background-color: #000000;
+    box-shadow: 0px 6px 12px rgba(40, 167, 69, 0.6);
+}
+
+/* Estilo para "Iniciar sesión" */
+#btnLogin {
+    background-color: #e0e5ec; /* Azul */
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.4);
+    color: #000000;
+}
+
+#btnLogin:hover {
+    background-color: #e0e5ec;
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Efecto de clic */
+.btn-start:active {
+    transform: scale(0.95);
+}
+/* Estilo general para el formulario de registro */
+#registerSection {
+    background: #e0e5ec;  /* Fondo suave de neumorfismo */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center; /* Centra el texto en todo el contenedor */
+}
+
+/* Título del formulario */
+#registerSection h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Estilo para los inputs (campos de texto) */
+#registerSection .form-control {
+    background-color: #f1f3f8;  /* Fondo gris claro */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.3s ease;
+    margin-bottom: 15px; /* Espaciado entre inputs */
+    width: 100%;
+}
+
+
+/* Etiquetas de los campos */
+#registerSection .form-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    text-align: center; /* Centra las etiquetas de los campos */
+    display: block;  /* Asegura que las etiquetas ocupen el 100% */
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el input */
+}
+
+/* Estilo para la fila de Nombre y Apellido */
+#registerSection .row {
+    margin-bottom: 2px;
+}
+
+/* Ajuste de las columnas para Nombre y Apellido */
+#registerSection .col-name, 
+#registerSection .col-lastname {
+    margin-bottom: 15px;  /* Espacio entre los campos */
+}
+
+#registerSection .col-name input, 
+#registerSection .col-lastname input {
+    width: 100%;  /* Aseguramos que cada campo ocupe el 100% del ancho */
+}
+
+/* Botón de registro */
+#registerSection button {
+    background-color: #000; /* Verde */
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-top: 20px;  /* Espaciado superior */
+}
+
+/* Estilo para los select (tipo de documento) */
+#registerSection .form-select {
+    background-color: #f1f3f8;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+/* Estilos para la responsividad */
+@media (max-width: 768px) {
+    #registerSection {
+        padding: 20px;
+    }
+
+    #registerSection h2 {
+        font-size: 1.6rem;
+    }
+
+    #registerSection .form-control {
+        padding: 10px 12px;
+    }
+
+    #registerSection button {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    /* Ajuste para que los campos de Nombre y Apellido estén uno al lado del otro */
+    #registerSection .row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #registerSection .col-name, 
+    #registerSection .col-lastname {
+        width: 45%; /* Reducimos el tamaño de los campos para que quepan en una fila */
+    }
+}
+
+/* En pantallas más grandes (tablet o escritorio) */
+@media (min-width: 769px) {
+    #registerSection .row {
+        display: flex;
+        justify-content: space-between; /* Coloca los campos al lado del otro */
+    }
+
+    #registerSection .col-name, 
+    #registerSection .col-lastname {
+        width: 48%; /* Asegura que los campos ocupen el 48% del ancho */
+    }
+}
+/* Estilo general para el formulario de login */
+#loginSection {
+    background: #e0e5ec;  /* Fondo suave de neumorfismo */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center; /* Centra el texto en todo el contenedor */
+}
+.step-date-text {
+    font-family: 'Arial', sans-serif;  /* Puedes cambiar el font aquí */
+    font-size: 14px;  /* Tamaño de la fuente más pequeño */
+    color: #555;  /* Color gris oscuro */
+    font-weight: 400;  /* Peso normal para la fuente */
+    letter-spacing: 0.5px;  /* Espaciado entre letras para mejorar la legibilidad */
+}
+
+/* Título del formulario */
+#loginSection h1 {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Estilo para los inputs (campos de texto) */
+#loginSection .form-control {
+    background-color: #f1f3f8;  /* Fondo gris claro */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.3s ease;
+    margin-bottom: 15px; /* Espaciado entre inputs */
+    width: 100%;
+}
+
+/* Etiquetas de los campos */
+#loginSection .form-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    text-align: center; /* Centra las etiquetas de los campos */
+    display: block;  /* Asegura que las etiquetas ocupen el 100% */
+    margin-bottom: 5px; /* Espacio entre la etiqueta y el input */
+}
+
+/* Estilo para el botón de login */
+#loginSection button {
+    background-color: #000; /* Fondo oscuro */
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-top: 20px;  /* Espaciado superior */
+}
+
+/* Estilos para la responsividad */
+@media (max-width: 768px) {
+    #loginSection {
+        padding: 20px;
+    }
+
+    #loginSection h1 {
+        font-size: 1.6rem;
+    }
+
+    #loginSection .form-control {
+        padding: 10px 12px;
+    }
+
+    #loginSection button {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+}
+
+/* En pantallas más grandes (tablet o escritorio) */
+@media (min-width: 769px) {
+    #loginSection .row {
+        display: flex;
+        justify-content: space-between; /* Coloca los campos al lado del otro */
+    }
+
+    #loginSection .col-name, 
+    #loginSection .col-lastname {
+        width: 48%; /* Asegura que los campos ocupen el 48% del ancho */
+    }
+}
+.input-group {
+    position: relative;
+}
+
+.input-group-text {
+    cursor: pointer; /* Cambiar el cursor para que se vea como interactivo */
+    background-color: transparent;
+    border: none;
+    padding: 0 10px; /* Agregar un poco de padding para hacerlo más cómodo */
+}
+
+.input-group-text i {
+    font-size: 1.2rem; /* Ajustar el tamaño del ícono */
+}

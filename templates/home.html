@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Cargar Bootstrap CSS desde CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Cargar iconos de FontAwesome para el avatar y la notificación -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- Importar fuente bonita de Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f7;
+        }
+
+        .navbar-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .navbar-custom {
+            background-color: #6c2ce2;
+            border-bottom: none;
+            box-shadow: none;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .avatar {
+            margin-left: 10px;
+        }
+
+        .notification-icon, .message-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .d-flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .main-container {
+            width: 100%;
+            height: 380px;
+            background-color: #6c2ce2;
+            margin: 0 auto;
+            padding: 15px;
+            margin-top: -1px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .amount {
+            font-size: 3.5em;
+            color: white;
+            font-weight: bold;
+            margin-top: -50px;
+        }
+
+        .amount-subtext {
+            color: #fffefe;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .warning-text {
+            color: rgb(207, 207, 207);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 0.80em;
+            font-weight: bold;
+        }
+
+        .red-text {
+            color: yellow;
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .custom-container {
+            width: 100%;
+            padding: 2px 0;
+            display: flex;
+            justify-content: flex-start;
+            overflow-x: auto;
+            gap: 1.5px;
+            padding-bottom: 5px;
+            border-radius: 15px;
+        }
+
+        .step {
+            background-color: #4700ca;
+            padding: 15px;
+            width: 140px;
+            text-align: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .step-amount {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .step-status {
+            font-size: 0.9rem;
+            color: #ff5722;
+            margin-bottom: 15px;
+        }
+
+        .step-date-text {
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        .payment-buttons {
+            margin-top: 10px;
+        }
+
+        .payment-btn button {
+            font-size: 1em;
+            padding: 8px 15px;
+            background-color: #28a745;
+            font-weight: bold;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .payment-btn button:hover {
+            background-color: #218838;
+        }
+
+        .modal-header, .modal-footer {
+            background-color: #6c2ce2;
+            color: white;
+        }
+
+        .modal-body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group label {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        #paymentDetails {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 1.1rem;
+        }
+
+        #paymentDetails h6 {
+            color: #333;
+            font-weight: bold;
+        }
+
+        #paymentDetails p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .btn-lg {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .close {
+            font-size: 1.5rem;
+        }
+
+        .notification-icon, .message-icon, .logout-icon {
+            font-size: 1.8rem;
+            color: white;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            margin-left: 5px;
+        }
+
+        .notification-icon:hover, .message-icon:hover, .logout-icon:hover {
+            color: #ffdd57;
+            transform: scale(1.2);
+        }
+
+        .avatar img, .avatar i {
+            border: 2px solid #ffffff;
+            padding: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar img:hover, .avatar i:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand navbar-dark navbar-custom">
+    <div class="container-fluid">
+        <span class="navbar-text">
+            KrediApp
+        </span>
+        <ul class="navbar-nav d-flex align-items-center ml-auto">
+            <!-- Icono de Home -->
+            <li class="nav-item">
+                <a class="nav-link" href="/home">
+                    <i class="fas fa-home" style="font-size: 1.8rem; color: white;"></i> <!-- Ícono de Home -->
+                </a>
+            </li>
+            <!-- Avatar (Perfil) -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('account') }}">
+                    <div class="avatar">
+                        {% if user.gender == 'masculino' %}
+                            <img src="{{ url_for('static', filename='img/men.jpg') }}" alt="Avatar Masculino" class="rounded-circle" width="35" height="35">
+                        {% elif user.gender == 'femenino' %}
+                            <img src="{{ url_for('static', filename='img/women.png') }}" alt="Avatar Femenino" class="rounded-circle" width="35" height="35">
+                        {% else %}
+                            <i class="fas fa-user-circle" style="font-size: 45px; color: white;"></i>  <!-- Ícono por defecto -->
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+<!-- Icono de cerrar sesión, al lado derecho -->
+<li class="nav-item ml-auto">
+    <!-- Formulario para cerrar sesión -->
+    <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
+        <button type="submit" style="background: none; border: none; cursor: pointer;">
+            <i class="fas fa-sign-out-alt logout-icon"></i> <!-- Ícono de cerrar sesión -->
+        </button>
+    </form>
+</li>
+
+    </div>
+</nav>
+
+<!-- Main content -->
+<div class="main-container">
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <div class="amount">${{ "{:,.0f}".format(user.balance) }}</div>
+            <div class="warning-text">
+                Recuerda <span class="red-text">Pagar</span> tus <span class="red-text">Cuotas</span> a tiempo,
+                <span class="red-text">para evitar pagos por moras</span>.
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-container">
+        {% for loan in loans %}
+            {% if loan.status == 'aprobado' %}
+                {% for i in range(1, loan.installments + 1) %}
+                    <div class="step">
+                        <div class="step-title">Cuota {{ i }}</div>
+                        <div class="step-amount">${{ "{:,.0f}".format(loan.installment_amount) }}</div>
+                        <div class="step-date">
+                            <span class="step-date-text">{{ loan.payment_dates[i-1] | datetimeformat }}</span>
+                        </div>
+
+                        <!-- Mostrar el estado de la cuota -->
+                        <div class="step-status">
+                            {% set payment_for_loan = loan.payments[i-1] %}
+                            {% if payment_for_loan %}
+                                {% if payment_for_loan.status == 'pendiente' %}
+                                    <span class="badge bg-warning">Pendiente</span>
+                                {% elif payment_for_loan.status == 'aprobado' %}
+                                    <span class="badge bg-success">Aprobado</span>
+                                {% elif payment_for_loan.status == 'rechazado' %}
+                                    <span class="badge bg-danger">Rechazado</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="badge bg-info">En espera</span>
+                            {% endif %}
+                        </div>
+            
+                        <!-- Botón de pago solo si el pago no ha sido realizado o ha sido rechazado -->
+                        {% if not payment_for_loan or payment_for_loan.status == 'rechazado' %}
+                            <div class="payment-buttons">
+                                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#paymentModal" 
+                                        data-amount="{{ loan.installment_amount }}" 
+                                        data-loan="{{ loan.id }}">Pagar</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="text-center">
+        {% if user.is_verified %}
+        <!-- Si el usuario está verificado, mostrar el botón para solicitar crédito -->
+        <a href="{{ url_for('creditapp') }}">
+            <button class="btn" style="background-color: #3235e6; color: white; width: 300px; height: 40px; font-weight: bold; border-radius: 15px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto;">
+                <i class="fas fa-hand-holding-usd" style="margin-right: 8px; font-size: 1.2em;"></i> <!-- Icono de préstamo -->
+                Solicitar nuevo Crédito
+            </button>
+        </a>
+        {% elif user.verification_pending %}
+        <!-- Si el usuario está en espera de verificación -->
+        <div class="alert alert-info mt-3" role="alert" style="font-size: 1em;">
+            <strong>Tu cuenta está siendo revisada.</strong> Una vez aprobada, podrás solicitar créditos. Gracias por tu paciencia.
+        </div>
+        <button class="btn" style="background-color: #3235e6; color: white; width: 300px; height: 40px; font-weight: bold; border-radius: 15px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; cursor: not-allowed; opacity: 0.5;" disabled>
+            <i class="fas fa-hand-holding-usd" style="margin-right: 8px; font-size: 1.2em;"></i> <!-- Icono de préstamo -->
+            Solicitar nuevo Crédito
+        </button>
+        {% else %}
+        <!-- Si el usuario no está verificado, mostrar el mensaje de alerta -->
+        <button class="btn" style="background-color: #3235e6; color: white; width: 300px; height: 40px; font-weight: bold; border-radius: 15px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; cursor: not-allowed; opacity: 0.5;" disabled>
+            <i class="fas fa-hand-holding-usd" style="margin-right: 8px; font-size: 1.2em;"></i> <!-- Icono de préstamo -->
+            Solicitar nuevo Crédito
+        </button>
+        <!-- Mensaje de alerta -->
+        <div class="alert alert-danger mt-3" role="alert" style="font-size: 0.9em;">
+            <strong>¡Atención!</strong> Debes verificar tu cuenta para solicitar un crédito. <a href="{{ url_for('account') }}" class="alert-link">Haz clic aquí para verificar tu cuenta.</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Nuevo botón: Refiere a un amigo o cliente -->
+<div class="text-center mt-3">
+    {% if user.is_verified %}
+        <button class="btn" style="background-color: #FFA500; color: white; width: 300px; height: 40px; font-weight: bold; border-radius: 15px; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto;" data-toggle="modal" data-target="#referModal">
+            <i class="fas fa-users" style="margin-right: 8px; font-size: 1.2em;"></i> <!-- Ícono de varias personas -->
+            Refiera a un amigo o cliente
+        </button>
+    {% else %}
+        <p><span class="badge bg-danger">Debes estar verificado para referir a un amigo o cliente.</span></p>
+    {% endif %}
+</div>
+
+<!-- Modal de Referir a un Amigo o Cliente -->
+<div class="modal fade" id="referModal" tabindex="-1" role="dialog" aria-labelledby="referModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #4CAF50; color: white;">
+                <h5 class="modal-title" id="referModalLabel">Referir a un Amigo o Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #f9f9f9; padding: 30px;">
+                <!-- Formulario de Referir -->
+                <form id="referForm" method="POST" action="{{ url_for('refer_friend') }}">
+                    <div class="form-group">
+                        <label for="friendName" style="font-weight: bold;">Nombre Completo del Amigo o Cliente</label>
+                        <input type="text" class="form-control" id="friendName" name="friend_name" placeholder="Ingresa el nombre completo" required style="border-radius: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="friendWhatsapp" style="font-weight: bold;">Número de WhatsApp</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="prefix">+57</span>
+                            <input type="text" class="form-control" id="friendWhatsapp" name="friend_whatsapp" placeholder="Ingresa el número de WhatsApp" required style="border-radius: 10px;" maxlength="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <p style="font-size: 0.9em; color: #888;">
+                            Al referir a un amigo o cliente, usted se compromete a asumir la responsabilidad solidaria por el cumplimiento del préstamo otorgado. 
+                            Si el referido no realiza los pagos correspondientes, el responsable será quien refiera, quien deberá cubrir el monto del préstamo en caso de impago. 
+                            Asegúrese de que la persona referida esté comprometida con sus obligaciones financieras.
+                        </p>
+                    </div>
+
+                    <button type="submit" class="btn btn-success" style="width: 100%; padding: 15px; border-radius: 10px; font-size: 18px; font-weight: bold;">Referir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Asegurarse de que solo se puedan ingresar números en el campo de WhatsApp
+    document.getElementById('friendWhatsapp').addEventListener('input', function(e) {
+        // Eliminar caracteres no numéricos y limitar la longitud a 10 dígitos
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+    });
+
+    // Función para modificar el valor antes de enviar el formulario
+    document.getElementById('referForm').addEventListener('submit', function(e) {
+        // Obtener el campo de WhatsApp
+        var whatsappField = document.getElementById('friendWhatsapp');
+        
+        // Prepend +57 al número del WhatsApp antes de enviarlo
+        whatsappField.value = '+57' + whatsappField.value;
+
+        // Esto asegura que el valor enviado tenga el prefijo +57
+    });
+</script>
+
+
+<!-- Estilos adicionales para el modal -->
+<style>
+    .modal-content {
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+        border-bottom: 2px solid #4CAF50;
+    }
+
+    .modal-body {
+        background-color: #f9f9f9;
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    .form-group input {
+        padding: 12px;
+        font-size: 1em;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .form-group p {
+        color: #777;
+    }
+
+    .btn {
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
+
+
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #4CAF50; color: white; border-bottom: none;">
+                <h5 class="modal-title" id="paymentModalLabel">Realizar Pago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #f9f9f9; padding: 30px;">
+                <!-- Formulario de pago con método POST -->
+                <form id="paymentForm" method="POST" action="{{ url_for('submit_payment') }}" enctype="multipart/form-data">
+
+                    <input type="hidden" id="userIdInput" name="user_id">
+                    <input type="hidden" id="loanIdInput" name="loan_id">
+                    <input type="hidden" id="loanAmountInput" name="loan_amount">
+                    <input type="hidden" id="loanNameInput" name="loan_name">
+                    <input type="hidden" id="loanDateInput" name="loan_date">
+                    <input type="hidden" id="paymentMethodInput" name="payment_method">
+                    <input type="hidden" id="paymentDetailsInput" name="payment_details">
+
+                    <div class="form-group">
+                        <label for="userName" style="font-weight: bold;">Nombre del Usuario</label>
+                        <input type="text" class="form-control" id="userName" value="{{ user.first_name }} {{ user.last_name }}" readonly style="border-radius: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="userId" style="font-weight: bold;">ID del Usuario</label>
+                        <input type="text" class="form-control" id="userId" value="{{ user.id }}" readonly style="border-radius: 10px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loanName" style="font-weight: bold;">Nombre de la Cuota</label>
+                        <input type="text" class="form-control" id="loanName" name="loan_name" readonly style="border-radius: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="loanAmount" style="font-weight: bold;">Monto a Pagar</label>
+                        <input type="text" class="form-control" id="loanAmount" name="loan_amount" readonly style="border-radius: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="loanDate" style="font-weight: bold;">Fecha de la Cuota</label>
+                        <input type="text" class="form-control" id="loanDate" name="loan_date" readonly style="border-radius: 10px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentMethod" style="font-weight: bold;">Método de Pago</label>
+                        <select class="form-control" id="paymentMethod" name="payment_method" style="border-radius: 10px;">
+                            <option value="" disabled selected>Elegir opción</option>
+                            <option value="bancolombia">Bancolombia</option>
+                            <option value="nequi">Nequi</option>
+                        </select>
+                    </div>
+
+                    <div id="paymentDetails" class="form-group" style="display: none;">
+                        <label for="paymentDetailsText" style="font-weight: bold;">Detalles de Pago</label>
+                        <input type="text" class="form-control" id="paymentDetailsText" name="payment_details" readonly style="border-radius: 10px;">
+                    </div>
+
+                    <!-- Añadir campo de archivo para el comprobante de pago -->
+                    <div class="form-group">
+                        <label for="paymentReceipt" style="font-weight: bold;">Comprobante de Pago</label>
+                        <input type="file" class="form-control-file" id="paymentReceipt" name="payment_receipt" accept="image/*,application/pdf" style="border-radius: 10px;">
+                    </div>
+
+                    <button type="submit" class="btn btn-success" style="width: 100%; padding: 15px; border-radius: 10px; font-size: 18px; font-weight: bold;">Confirmar Pago</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <!-- Mostrar los pagos realizados -->
+    <h3 class="mt-4 text-center text-primary font-weight-bold">Historial de Pagos</h3>
+    
+    <!-- Tabla de pagos, con clase responsive para dispositivos pequeños -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered shadow-sm rounded">
+            <thead class="thead-custom">
+                <tr>
+                    <th>#</th>
+                    <th>Cuota</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                    <th>Método</th>
+                    <th>Detalles</th>
+                    <th>Estado</th> <!-- Nueva columna para mostrar el estado -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                    <tr>
+                        <td>{{ payment.id }}</td>
+                        <td>{{ payment.loan_name }}</td>
+                        <td>${{ "{:,.2f}".format(payment.amount) }}</td>
+                        <td>{{ payment.loan_date.strftime('%d de %B, %Y') }}</td> <!-- Fecha en formato adecuado -->
+                        <td>{{ payment.payment_method }}</td>
+                        <td>{{ payment.payment_details }}</td>
+                        <td>
+                            <!-- Mostrar el estado del pago -->
+                            {% if payment.status == 'aprobado' %}
+                                <span class="badge bg-success">Aprobado</span>
+                            {% elif payment.status == 'pendiente' %}
+                                <span class="badge bg-warning">Pendiente</span>
+                            {% elif payment.status == 'rechazado' %}
+                                <span class="badge bg-danger">Rechazado</span>
+                            {% else %}
+                                <span class="badge bg-secondary">No especificado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">No se han realizado pagos aún.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Estilos adicionales personalizados -->
+<style>
+    /* Estilo general de la tabla */
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* Estilo para la cabecera */
+    .thead-custom {
+        background-color: #6610f2; /* Verde más agradable */
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Estilo para las filas de la tabla al pasar el cursor sobre ellas */
+    .table-striped tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Estilo para las celdas de la tabla */
+    .table td, .table th {
+        text-align: center;
+        vertical-align: middle;
+        padding: 12px;
+    }
+
+    /* Añadir sombra a la tabla */
+    .table-bordered {
+        border: 1px solid #ddd;
+    }
+
+    /* Estilo para los textos de la fila vacía */
+    .text-muted {
+        font-size: 0.9em;
+    }
+
+    /* Bordes redondeados y sombra */
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para la cabecera de la tabla */
+    th {
+        border-top: 2px solid #4CAF50;
+        border-bottom: 2px solid #4CAF50;
+    }
+
+    /* Ajustes de la tabla para pantallas pequeñas */
+    @media (max-width: 767px) {
+        .table td, .table th {
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+</style>
+
+
+
+
+<!-- Scripts de Bootstrap y jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Cuando se haga clic en el botón de pagar
+    $('button[data-toggle="modal"]').on('click', function() {
+        // Obtener la información del botón y de su contenedor
+        var loanAmount = $(this).data('amount');  // Obtener el monto del préstamo
+        var loanId = $(this).data('loan');        // Obtener el ID del préstamo
+
+        // Obtener el nombre de la cuota, monto y fecha de la cuota desde los elementos hermanos
+        var stepTitle = $(this).closest('.step').find('.step-title').text();  // Nombre de la cuota (Cuota 1, Cuota 2, ...)
+        var stepDate = $(this).closest('.step').find('.step-date-text').text();  // Fecha de la cuota
+
+        // Llenar los campos del modal
+        $('#loanName').val(stepTitle);           // Nombre de la cuota
+        $('#loanAmount').val('$' + loanAmount);  // Monto a pagar
+        $('#loanDate').val(stepDate);            // Fecha de la cuota
+
+        // Llenar los campos ocultos
+        $('#loanIdInput').val(loanId);           // ID del préstamo
+        $('#loanAmountInput').val(loanAmount);   // Monto del préstamo
+        $('#loanNameInput').val(stepTitle);      // Nombre de la cuota
+        $('#loanDateInput').val(stepDate);       // Fecha de la cuota
+        $('#userIdInput').val($('#userId').val()); // ID del usuario (obténlo desde el frontend)
+    });
+
+    // Cuando se cambia el método de pago
+    $('#paymentMethod').on('change', function() {
+        var selectedPaymentMethod = $(this).val();
+        var paymentDetailsText = '';
+
+        // Mostrar los detalles correspondientes según el método de pago seleccionado
+        if (selectedPaymentMethod == 'bancolombia') {
+            paymentDetailsText = 'Ahorros: 25644132';
+        } else if (selectedPaymentMethod == 'nequi') {
+            paymentDetailsText = 'Nequi: 3145253365';
+        }
+
+        // Actualizar el campo con los detalles del método de pago
+        $('#paymentDetailsText').val(paymentDetailsText);
+
+        // Mostrar el contenedor de detalles
+        $('#paymentDetails').show();
+
+        // Llenar el campo oculto con los detalles
+        $('#paymentDetailsInput').val(paymentDetailsText);
+
+        // Llenar el campo oculto con el método de pago
+        $('#paymentMethodInput').val(selectedPaymentMethod); // Asegurarse de que el método de pago se registre
+    });
+
+    // Asegúrate de que los campos ocultos están completos antes de enviar el formulario
+    $('#paymentForm').on('submit', function(event) {
+        // Verificar si el método de pago está seleccionado
+        var paymentMethod = $('#paymentMethod').val();
+        var paymentDetails = $('#paymentDetailsInput').val();
+
+        // Llenar el campo oculto de payment_method si no está vacío
+        if (!$('#paymentMethodInput').val() && paymentMethod) {
+            $('#paymentMethodInput').val(paymentMethod);
+        }
+
+        // Verificar si los campos requeridos están completos
+        if (!paymentMethod) {
+            alert("¡Por favor selecciona un método de pago!");
+            event.preventDefault();  // Previene el envío del formulario
+        }
+
+        if (!paymentDetails) {
+            alert("¡Por favor verifica los detalles del método de pago!");
+            event.preventDefault();  // Previene el envío del formulario
+        }
+    });
+});
+</script>
+
+</script>
